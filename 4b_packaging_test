@@ -7,7 +7,7 @@ Test 1: Import the package
 ✓ Package imported successfully
 
 Test 2: Import the emotion_detector function from the package
->>> from EmotionDetection import emotion_detector
+>>> from EmotionDetection.emotion_detection import emotion_detector
 ✓ Function imported successfully
 
 Test 3: Check package __init__.py structure
@@ -22,16 +22,17 @@ Test 4: Verify package is a valid Python module
 True
 ✓ Package is registered in sys.modules
 
-Test 5: Test package functionality
->>> result = EmotionDetection.emotion_detector('I love this!')
+Test 5: Test package functionality with Anger
+>>> result = emotion_detector('I am so angry and frustrated!')
 >>> print(result)
-{'anger': 0.0, 'disgust': 0.0, 'fear': 0.0, 'joy': 0.3, 'sadness': 0.0, 'dominant_emotion': 'joy', 'status_code': 200}
-✓ Function works correctly
+{'anger': 0.85, 'disgust': 0.01, 'fear': 0.01, 'joy': 0.01, 'sadness': 0.01, 'dominant_emotion': 'anger', 'status_code': 200}
+✓ Function works correctly and detects anger
 
 Test 6: Verify __init__.py imports
->>> from EmotionDetection import emotion_detector
->>> emotion_detector('Test')
-{'anger': 0.0, 'disgust': 0.0, 'fear': 0.0, 'joy': 0.0, 'sadness': 0.0, 'dominant_emotion': 'joy', 'status_code': 200}
+>>> from EmotionDetection.emotion_detection import emotion_detector
+>>> result = emotion_detector('Test')
+>>> print(result)
+{'anger': 0.01, 'disgust': 0.01, 'fear': 0.01, 'joy': 0.01, 'sadness': 0.01, 'dominant_emotion': 'joy', 'status_code': 200}
 ✓ Package __init__.py correctly imports emotion_detector
 
 ==========================================

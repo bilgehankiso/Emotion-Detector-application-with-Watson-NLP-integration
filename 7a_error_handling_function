@@ -1,57 +1,17 @@
-"""Emotion Detection Module - Analyzes text to detect emotions"""
-
-
-# Emotion keyword mappings
-EMOTION_KEYWORDS = {
-    'joy': ['love', 'happy', 'joy', 'excellent', 'great',
-            'wonderful', 'beautiful', 'fantastic', 'amazing', 'good'],
-    'anger': ['angry', 'anger', 'furious', 'mad', 'hate',
-              'upset', 'frustrated', 'annoyed', 'irritated'],
-    'sadness': ['sad', 'sadness', 'unhappy', 'depressed',
-                'miserable', 'disappointed', 'upset', 'grief', 'mourning'],
-    'fear': ['afraid', 'fear', 'scared', 'anxious',
-             'nervous', 'terrified', 'worry', 'concerned'],
-    'disgust': ['disgusting', 'disgust', 'repulsive',
-                'gross', 'repugnant', 'abhorrent', 'horrible']
-}
-
-
-def _classify_emotion(text):
-    """
-    Mock emotion classification based on keywords.
-    In production, this would use Watson NLP API.
-    """
-    text_lower = text.lower()
-    emotions = {emotion: 0.0 for emotion in EMOTION_KEYWORDS}
-
-    # Score emotions based on keywords
-    for emotion, keywords in EMOTION_KEYWORDS.items():
-        emotion_score = sum(0.3 for word in keywords if word in text_lower)
-        emotions[emotion] = emotion_score
-
-    # Normalize scores to 0-1 range
-    max_score = max(emotions.values())
-    if max_score > 1:
-        emotions = {e: score / max_score for e, score in emotions.items()}
-
-    # If no emotion detected, default to neutral
-    if max(emotions.values()) == 0:
-        emotions['joy'] = 0.5
-
-    return emotions
+"""Emotion Detection Module - Analyzes text to detect emotions using Watson NLP API"""
+import json
+import requests
 
 
 def emotion_detector(text_to_analyze):
     """
     Detects emotions in the given text using IBM Watson NLP API.
-    Uses mock implementation for development and testing.
 
     Args:
         text_to_analyze (str): The text to analyze for emotions
 
     Returns:
-        dict: A dictionary containing emotion scores and the dominant emotion,
-              or a dictionary with 'status_code' key if error occurs
+        dict: A dictionary containing emotion scores and the dominant emotion.
     """
 
     # Check for empty or None input
@@ -66,18 +26,35 @@ def emotion_detector(text_to_analyze):
             'status_code': 400
         }
 
-    # Get emotion scores using mock classifier
-    emotions = _classify_emotion(text_to_analyze)
+    url = 'https://sn-watson-emotion.labs.skills.network/v1/watson.runtime.nlp.v1/NlpService/EmotionPredict'
+    myobj = {"raw_document": {"text": text_to_analyze}}
+    header = {"grpc-metadata-mm-model-id": "emotion_aggregated-workflow_lang_en_stock"}
 
-    # Find the dominant emotion
-    dominant_emotion = max(emotions, key=emotions.get)
+    response = requests.post(url, json=myobj, headers=header, timeout=10)
+
+    # Return None for all emotions if status code is 400
+    if response.status_code == 400:
+        return {
+            'anger': None,
+            'disgust': None,
+            'fear': None,
+            'joy': None,
+            'sadness': None,
+            'dominant_emotion': None,
+            'status_code': 400
+        }
+
+    # Parse successful response
+    formatted_response = json.loads(response.text)
+    emotion_predictions = formatted_response['emotionPredictions'][0]['emotion']
+    dominant_emotion = max(emotion_predictions, key=emotion_predictions.get)
 
     return {
-        'anger': emotions['anger'],
-        'disgust': emotions['disgust'],
-        'fear': emotions['fear'],
-        'joy': emotions['joy'],
-        'sadness': emotions['sadness'],
+        'anger': emotion_predictions['anger'],
+        'disgust': emotion_predictions['disgust'],
+        'fear': emotion_predictions['fear'],
+        'joy': emotion_predictions['joy'],
+        'sadness': emotion_predictions['sadness'],
         'dominant_emotion': dominant_emotion,
-        'status_code': 200
+        'status_code': response.status_code
     }

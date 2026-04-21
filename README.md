@@ -1,4 +1,4 @@
-# Emotion Detector
+# Final Project: Emotion Detector
 
 An AI-powered emotion detection web application built with Flask and IBM Watson NLP library.
 
