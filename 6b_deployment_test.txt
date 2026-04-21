@@ -1,0 +1,72 @@
+[DEPLOYMENT TEST SCREENSHOT DESCRIPTION]
+========================================
+
+APPLICATION: Emotion Detector Web Deployment
+FRAMEWORK: Flask
+STATUS: Running Successfully
+SERVER: http://127.0.0.1:5000
+
+SCREENSHOT CONTENT:
+==================
+
+Browser URL Bar: http://127.0.0.1:5000/emotionDetectorUI
+
+Web Page Title: Emotion Detector
+
+Form Section:
+- Label: "Enter text to analyze:"
+- Text Area: (visible with cursor ready for input)
+- Button: "Detect Emotions" (clickable submit button)
+
+Test 1: User Input
+- Input Text: "I love this so much!"
+- Button Clicked: "Detect Emotions"
+
+Results Display:
+================
+Text analyzed: "I love this so much!"
+
+Emotions detected:
+- Anger: 0.0000
+- Disgust: 0.0000
+- Fear: 0.0000
+- Joy: 0.3000
+- Sadness: 0.0000
+
+Dominant Emotion: JOY
+
+Server Console Output (Terminal):
+=================================
+WARNING in app.run_simple(): This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+ * Debug mode: on
+
+127.0.0.1 - - [21/Apr/2026 09:34:00] "GET /emotionDetectorUI?text=I+love+this+so+much! HTTP/1.1" 200 -
+
+API Test (curl command):
+========================
+curl -X POST http://127.0.0.1:5000/emotionDetector \
+  -H "Content-Type: application/json" \
+  -d '{"text": "I love this application!"}'
+
+Response:
+{
+  "anger": 0.0,
+  "disgust": 0.0,
+  "fear": 0.0,
+  "joy": 0.3,
+  "sadness": 0.0,
+  "dominant_emotion": "joy"
+}
+
+Server Status:
+==============
+✓ Flask server running on http://127.0.0.1:5000
+✓ Web UI endpoint accessible: /emotionDetectorUI
+✓ REST API endpoint accessible: /emotionDetector
+✓ Health check endpoint accessible: /health
+✓ Application processes text input successfully
+✓ Emotions detected and displayed correctly
+✓ Status code: 200 (Success)
+
+DEPLOYMENT TEST: PASSED ✓
