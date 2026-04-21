@@ -1,0 +1,27 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.14.0, pytest-7.4.0, pluggy-1.6.0
+rootdir: /Users/bilgehankiso/Documents/GitHub/project
+collected 10 items
+
+test_emotion_detection.py::TestEmotionDetection::test_emotion_detector_anger PASSED [ 10%]
+test_emotion_detection.py::TestEmotionDetection::test_emotion_detector_disgust PASSED [ 20%]
+test_emotion_detection.py::TestEmotionDetection::test_emotion_detector_empty_string PASSED [ 30%]
+test_emotion_detection.py::TestEmotionDetection::test_emotion_detector_fear PASSED [ 40%]
+test_emotion_detection.py::TestEmotionDetection::test_emotion_detector_joy PASSED [ 50%]
+test_emotion_detection.py::TestEmotionDetection::test_emotion_detector_none_input PASSED [ 60%]
+test_emotion_detection.py::TestEmotionDetection::test_emotion_detector_output_format PASSED [ 70%]
+test_emotion_detection.py::TestEmotionDetection::test_emotion_detector_sadness PASSED [ 80%]
+test_emotion_detection.py::TestEmotionDetection::test_emotion_detector_score_valid PASSED [ 90%]
+test_emotion_detection.py::TestEmotionDetection::test_emotion_detector_whitespace PASSED [100%]
+
+============================== 10 passed in 0.01s ==============================
+
+SUMMARY
+=======
+Total Tests: 10
+Passed: 10
+Failed: 0
+Skipped: 0
+Success Rate: 100%
+
+All unit tests completed successfully!
