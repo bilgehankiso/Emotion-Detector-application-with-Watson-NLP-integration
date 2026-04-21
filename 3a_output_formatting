@@ -1,0 +1,52 @@
+def emotion_detector(text_to_analyze):
+    """
+    Detects emotions in the given text using IBM Watson NLP API.
+    Uses mock implementation for development and testing.
+
+    Args:
+        text_to_analyze (str): The text to analyze for emotions
+
+    Returns:
+        dict: A dictionary containing emotion scores and the dominant emotion,
+              or a dictionary with 'status_code' key if error occurs
+    """
+
+    # Check for empty or None input
+    if text_to_analyze is None or len(text_to_analyze.strip()) == 0:
+        return {
+            'anger': None,
+            'disgust': None,
+            'fear': None,
+            'joy': None,
+            'sadness': None,
+            'dominant_emotion': None,
+            'status_code': 400
+        }
+
+    # Get emotion scores using mock classifier
+    emotions = _classify_emotion(text_to_analyze)
+
+    # Find the dominant emotion
+    dominant_emotion = max(emotions, key=emotions.get)
+
+    return {
+        'anger': emotions['anger'],
+        'disgust': emotions['disgust'],
+        'fear': emotions['fear'],
+        'joy': emotions['joy'],
+        'sadness': emotions['sadness'],
+        'dominant_emotion': dominant_emotion,
+        'status_code': 200
+    }
+
+
+# CORRECT OUTPUT FORMAT:
+# {
+#   'anger': float (0.0-1.0),
+#   'disgust': float (0.0-1.0),
+#   'fear': float (0.0-1.0),
+#   'joy': float (0.0-1.0),
+#   'sadness': float (0.0-1.0),
+#   'dominant_emotion': str (emotion with highest score),
+#   'status_code': int (200 for success, 400 for invalid input)
+# }
