@@ -1,0 +1,22 @@
+Test 1: Positive emotion
+Input: "I love this so much!"
+Output: {'anger': 0, 'disgust': 0, 'fear': 0, 'joy': 0.3, 'sadness': 0, 'dominant_emotion': 'joy', 'status_code': 200}
+
+Test 2: Negative emotion
+Input: "I am so angry and frustrated!"
+Output: {'anger': 0.6, 'disgust': 0, 'fear': 0, 'joy': 0, 'sadness': 0, 'dominant_emotion': 'anger', 'status_code': 200}
+
+Test 3: Sad emotion
+Input: "I am very sad and unhappy"
+Output: {'anger': 0, 'disgust': 0, 'fear': 0, 'joy': 0, 'sadness': 0.6, 'dominant_emotion': 'sadness', 'status_code': 200}
+
+Test 4: Fearful emotion
+Input: "I am afraid and nervous"
+Output: {'anger': 0, 'disgust': 0, 'fear': 0.6, 'joy': 0, 'sadness': 0, 'dominant_emotion': 'fear', 'status_code': 200}
+
+✓ All outputs show correct format:
+  - All emotion keys (anger, disgust, fear, joy, sadness): Present
+  - Dominant emotion: Present and correct
+  - Status code: Present and correct
+  - Values are numeric (0.0-1.0 range) or null for errors
+  - Proper dictionary structure maintained
